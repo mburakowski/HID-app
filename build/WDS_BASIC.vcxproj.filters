@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\achievements.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\EWIEGA46WW\qrc_Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\achievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Debug\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Debug\ui_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Debug\ui_achievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Release\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Release\ui_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_Release\ui_achievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_MinSizeRel\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_MinSizeRel\ui_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_MinSizeRel\ui_achievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_RelWithDebInfo\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_RelWithDebInfo\ui_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\include_RelWithDebInfo\ui_achievements.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\CMakeFiles\c109ea0a64417ca5bc9d69bab76eeb03\autouic_(CONFIG).stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\CMakeFiles\37cf711fe6bfc27cf9c4a8e605cbb5e9\qrc_Resources.cpp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\imgs\dlon.jpg">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\imgs\hand.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\imgs\cup.jpg">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\mainwindow.ui" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\Resources.qrc" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\translations\WDS_BASIC_pl_PL.qm" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\WDS_BASIC_pl_PL.ts" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\libs\comsuppw.lib" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\libs\dxva2.lib" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\libs\dxva2.dll" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\dialog.ui" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\achievements.ui" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\translations\WDS_BASIC_pl_PL.ts" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\autouic_Debug.stamp" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\autouic_Release.stamp" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\autouic_MinSizeRel.stamp" />
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\WDS_BASIC_autogen\autouic_RelWithDebInfo.stamp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{6BE74201-9054-3C6D-8E4C-BF5FB3442A96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1E8BD2AB-BFDF-37EF-959F-9047931412E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{4D55B452-2821-343F-9701-52533DCB0C26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{81464405-4D7D-33DD-BD34-9FFAED2B1AD0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

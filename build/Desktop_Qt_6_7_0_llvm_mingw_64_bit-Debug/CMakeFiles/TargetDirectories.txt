@@ -1,0 +1,14 @@
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/WDS_BASIC_lrelease.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/release_translations.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/copy_qm_files.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/WDS_BASIC.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/WDS_BASIC_lupdate.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/update_translations.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/WDS_BASIC_lrelease1.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/list_install_components.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/install.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/install/local.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/install/strip.dir
+C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-Debug/CMakeFiles/WDS_BASIC_autogen.dir

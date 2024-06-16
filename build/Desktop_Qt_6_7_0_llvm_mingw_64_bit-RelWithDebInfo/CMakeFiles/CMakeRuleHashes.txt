@@ -1,0 +1,8 @@
+# Hashes of file build rules.
+23554bb37012176f95971121a9b5038e CMakeFiles/WDS_BASIC_autogen
+031c4b156e866cf18fe882492758dbce CMakeFiles/WDS_BASIC_lrelease
+031c4b156e866cf18fe882492758dbce CMakeFiles/WDS_BASIC_lrelease1
+3c8b5a7441c17a61ffea6776175c1a89 CMakeFiles/WDS_BASIC_lupdate
+e0d63da761885601cc2a9a2387a1fe25 CMakeFiles/copy_qm_files
+014ba2cd0bdb963c12bf1690a07b0f09 WDS_BASIC_autogen/EWIEGA46WW/qrc_Resources.cpp
+7aac92896bc2920da8c140af86824ddf WDS_BASIC_pl_PL.qm

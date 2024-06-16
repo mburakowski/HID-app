@@ -1,0 +1,26 @@
+var class_main_window =
+[
+    [ "MainWindow", "class_main_window.html#a89d6abe0662b2da43b864c33e799682b", null ],
+    [ "~MainWindow", "class_main_window.html#ae98d00a93bc118200eeef9f9bba1dba7", null ],
+    [ "changeFocus", "class_main_window.html#a59ed19594e21364da4e798e26541249c", null ],
+    [ "on_dial_2_valueChanged", "class_main_window.html#af2ff20d70d51adda8b7fbb0ea4bb547a", null ],
+    [ "on_dial_3_valueChanged", "class_main_window.html#aadc829a8bffee099691161fdb391542b", null ],
+    [ "on_dial_4_valueChanged", "class_main_window.html#a0ed712cf81ecf87dbbf188bf0c5cb926", null ],
+    [ "on_dial_valueChanged", "class_main_window.html#ab032eedb4d4cc4668975cc326ec4e1a6", null ],
+    [ "on_Front_Wave_clicked", "class_main_window.html#a10fa3aa726ddf8721891fc405e3bf00c", null ],
+    [ "on_oddalenie_clicked", "class_main_window.html#a4d36b81bb33a67ddf263315b6a70eea0", null ],
+    [ "on_osiagniecia_przycisk_clicked", "class_main_window.html#a9b6985ef8c1dc459fe8198a24a801097", null ],
+    [ "on_przyblizenie_clicked", "class_main_window.html#a7ddef6c38248ef3a44c919945450dcb0", null ],
+    [ "on_pushButton_2_clicked", "class_main_window.html#ae0e46dc3da4ee07bf66e73e20300220c", null ],
+    [ "on_pushButton_3_clicked", "class_main_window.html#a12cf88402a93adef89645ba4e4cb7be1", null ],
+    [ "on_pushButton_4_clicked", "class_main_window.html#ae80a036ef40bb6ac0165471f71fef287", null ],
+    [ "on_pushButton_clicked", "class_main_window.html#a4de79c63c7fa0b8d7c468ac71f20be81", null ],
+    [ "on_Wykres_clicked", "class_main_window.html#a6690f53131eb8fba5e13c29eece072ca", null ],
+    [ "on_zmiana_trybu_currentIndexChanged", "class_main_window.html#af4c620db3065802876b091866bbe87fb", null ],
+    [ "updateImageSize", "class_main_window.html#ae78983c58203f97d6879ea63b5eb6820", null ],
+    [ "wavingImage", "class_main_window.html#afc504544ee2abb71bbd8af995fffe002", null ],
+    [ "controllerInstance", "class_main_window.html#ac550813a07822962dba8cf93a92b7a92", null ],
+    [ "previousDialValue", "class_main_window.html#acd6fb139a10d3737da45ee72085db33c", null ],
+    [ "scaleFactor", "class_main_window.html#aa0581e0cef742cc5a2af236cee35ae74", null ],
+    [ "ui", "class_main_window.html#a35466a70ed47252a0191168126a352a5", null ]
+];

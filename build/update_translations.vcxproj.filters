@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\CMakeFiles\d336d8ec9b25a392edad8186abeb5285\update_translations.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\MaciejBurakowski(258\Documents\WDS_BASIC\build\CMakeFiles\update_translations" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{6BE74201-9054-3C6D-8E4C-BF5FB3442A96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

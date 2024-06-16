@@ -1,0 +1,115 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-7aabdc479bac93481182.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "WDS_BASIC",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "WDS_BASIC::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WDS_BASIC-Debug-923dc42442bd3efead91.json",
+					"name" : "WDS_BASIC",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WDS_BASIC_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WDS_BASIC_autogen-Debug-2da489e4df87230ac08b.json",
+					"name" : "WDS_BASIC_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WDS_BASIC_lrelease::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WDS_BASIC_lrelease-Debug-cf4e24b4708bd1a7593a.json",
+					"name" : "WDS_BASIC_lrelease",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WDS_BASIC_lrelease1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WDS_BASIC_lrelease1-Debug-5ed5690e9c97c008f135.json",
+					"name" : "WDS_BASIC_lrelease1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "WDS_BASIC_lupdate::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-WDS_BASIC_lupdate-Debug-d10e482ada45e3a2716e.json",
+					"name" : "WDS_BASIC_lupdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "release_translations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-release_translations-Debug-628409e8cbe08243a8c3.json",
+					"name" : "release_translations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "update_translations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-update_translations-Debug-79d630cfaa57cbc0b63c.json",
+					"name" : "update_translations",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_8_0_llvm_mingw_64_bit-Debug",
+		"source" : "C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
