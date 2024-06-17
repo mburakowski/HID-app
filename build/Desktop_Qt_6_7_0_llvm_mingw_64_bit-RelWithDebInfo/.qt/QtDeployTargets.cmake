@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_WDS_BASIC_FILE C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/build/Desktop_Qt_6_7_0_llvm_mingw_64_bit-RelWithDebInfo/WDS_BASIC.exe)
-set(__QT_DEPLOY_TARGET_WDS_BASIC_RUNTIME_DLLS C:/Qt/6.7.0/msvc2019_64/bin/Qt6Charts.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6SerialPort.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6OpenGLWidgets.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6Widgets.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6OpenGL.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6Gui.dll;C:/Qt/6.7.0/msvc2019_64/bin/Qt6Core.dll)
