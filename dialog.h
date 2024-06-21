@@ -1,13 +1,15 @@
+/**
+ * @file dialog.h
+ * @brief Definicja klasy Dialog, która obsługuje powstawanie wykresu.
+ */
 #ifndef DIALOG_H
 #define DIALOG_H
 
 #include <QDialog>
 #include <QtCharts/QtCharts>
 #include <QtCharts/QLineSeries>
-//#include "mainwindow.h"
 #include <QDateTime>
 #include <QDebug>
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Dialog; }
@@ -28,9 +30,7 @@ public:
      *
      * @param parent Wskaźnik na obiekt nadrzędny (rodzica) okna dialogowego.
      */
-    //explicit Dialog(MainWindow *mainWindow, QWidget *parent = nullptr);
     explicit Dialog(QWidget *parent = nullptr);
-    //void updateChart(int progressBarIndex, int value);
 
     /**
      * @brief Destruktor klasy Dialog.
@@ -39,16 +39,7 @@ public:
 
 
 public slots:
-    //void updateChart(int value);
-    // void updateDial4Value(int value);
-    // void updateDial2Value(int value);
-    // void updateDial3Value(int value);
-    // void updateDialValue(int value);
-    // void updateChartFromMainWindow(int value);
-    //void on_someEventTriggered();
     void updateChart(int progressBarIndex, int value);
-
-
 
 private:
     Ui::Dialog *ui; /**< Wskaźnik na obiekt interfejsu użytkownika. */
@@ -61,9 +52,7 @@ private:
     QLineSeries *progressBar1Series;
     QLineSeries *progressBar2Series;
     QLineSeries *progressBar3Series;
-    int count; // Add this line
-
-
+    int count;
 };
 
 #endif // DIALOG_H

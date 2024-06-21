@@ -1,3 +1,8 @@
+/**
+ * @file mainwindow.h
+ * @brief Definicja klasy MainWindow, która zawiera UI i logikę programu.
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -58,7 +63,7 @@ public slots:
     void handleEncoderValue(int value);
 
 
-private slots: // Deklaracje slotów
+private slots:
 
     void on_dial_4_valueChanged(int value);
 
@@ -81,8 +86,6 @@ private slots: // Deklaracje slotów
 
     void on_przyblizenie_clicked();
 
-    //void on_Wykres_clicked();
-
     void wavingImage();
 
     void on_Front_Wave_clicked();
@@ -91,20 +94,13 @@ private slots: // Deklaracje slotów
 
     void on_zmiana_trybu_currentIndexChanged(int index);
 
-    void readSerialData(); //uint8_t receivedData
-
-    //void initializeSerialPort();
+    void readSerialData();
 
     void on_encoderValueChanged(int value);
 
     void processEncoderData(const QByteArray &data);
 
-    //void processTOFData();
     void processTOFData(const QByteArray &data);
-
-    //void processSerialData(const QByteArray &data);
-
-    void processSensorData(const QByteArray &data);
 
     void updateChartValues(int progressBarIndex, int values);
 
@@ -132,15 +128,19 @@ private slots: // Deklaracje slotów
     void setVolume(int value);
     void changeWebWindow(int value);
     void changeDesktop(int value);
-    void changeAppFocus(int value);
-
+    void changeAppFocus(int direction);
+    void processSerialFrame(const QByteArray &data);
+    void handleButtonPress(int buttonValue, QPushButton* button, int buttonIndex);
+    void processButtonPresses(int buttonValues[4]);
+    void resetAppFocus();
+    void updateDistanceLabel(int value);
 
 private:
-    Ui::MainWindow *ui; /**< Wskaźnik na obiekt interfejsu użytkownika. */
-    int previousDialValue; /**< Poprzednia wartość pokrętła. */
+    Ui::MainWindow *ui;
+    int previousDialValue;
     int previousEncoderValue;
-    Controller *controllerInstance; /**< Wskaźnik na obiekt klasy Controller. */
-    float scaleFactor; /**< Współczynnik skali obrazu. */
+    Controller *controllerInstance;
+    float scaleFactor;
     QSerialPort *serial;
     unsigned char receivedData;
     int moveCounter;
@@ -154,11 +154,15 @@ private:
     bool isPolishSelected;
     void loadLanguage(const QString& langCode);
     int totalClicks;
-
+    const int expectedDataSize = sizeof(int) * 9;
+    int lastLabel;
+    int direction;
+    bool isAltPressed;
+    QTimer *appFocusTimer;
 
 
 signals:
-    void changeFocus(); /**< Sygnał emitowany przy zmianie fokusu. */
+    void changeFocus();
     void encoderValueChanged(int value);
     void serialDataReceived(int value);
     void dialValueChanged(int value);
@@ -168,8 +172,6 @@ signals:
     void progressBarValueChanged(int progressBarIndex, int value);
     void totalTurnsChanged(int totalTurns);
     void totalTurnsReset();
-
-
 };
 
 #endif // MAINWINDOW_H

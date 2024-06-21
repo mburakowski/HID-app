@@ -1,3 +1,7 @@
+/**
+ * @file controller.h
+ * @brief Definicja klasy Controller, która obsługuje część obłsugi makr pokręteł.
+ */
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 

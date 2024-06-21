@@ -1,3 +1,16 @@
+/**
+  ******************************************************************************
+  * @file           : controller.cpp
+  * @brief          : Miejsce tworzenia niektórych funkcji służących do
+  *                 kontrolowania urządzeniem.
+  *
+  ******************************************************************************
+  * @attention
+
+  ******************************************************************************
+  */
+
+
 #pragma comment(lib, "wbemuuid.lib")
 #pragma comment(lib, "libs/comsuppw.lib")
 #pragma comment(lib, "kernel32.lib")
@@ -207,7 +220,10 @@ void Controller::toggleMicrophoneMute() {
     }
 }
 
-
+/**
+ * @brief Funkcja tworząca nowy wirtualny Pulpit
+ * @details Funkcja niezbędna do utworzenia wirtualnego pulpitu za pomocą przycisku na urządzeniu
+ */
 void Controller::createNewDesktop(){
     INPUT input[4] = {};
 
@@ -231,8 +247,12 @@ void Controller::createNewDesktop(){
     SendInput(4, input, sizeof(INPUT));
 }
 
-
+/**
+ * @brief Funkcja do akceptowania zmian
+ * @details Funkcja służy do zatwierdzania zmian za pomocą urządzenia
+ */
 void Controller::accChanges(){
     keybd_event(VK_RETURN, 0, 0, 0); // Wciśnięcie klawisza Enter
     keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 }
+

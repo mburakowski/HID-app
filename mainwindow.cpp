@@ -1,3 +1,8 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Zawiera główną logikę programu oraz interfejs użytkownika dla aplikacji.
+ */
+
 #include "mainwindow.h"
 #include "dialog.h"
 #include "achievements.h"
@@ -22,13 +27,22 @@
 #include <QSettings>
 #include <QTranslator>
 
+/**
+ * @class MainWindow
+ * @brief Klasa MainWindow obsługuje główne okno i jego interakcje.
+ *
+ * Ta klasa zarządza interfejsem użytkownika i łączy interakcje użytkowników
+ * z funkcjonalnymi częściami aplikacji, takimi jak zmiana głośności systemu,
+ * nawigacja między kartami itp.
+ */
+
+
 
 /**
- * @brief Konstruktor klasy MainWindow
- * @param controller Wskaźnik do obiektu klasy Controller
- * @param parent Wskaźnik do obiektu nadrzędnego
- * @details Konstruktor inicjuje interfejs użytkownika, wczytuje obrazy i ustawia połączenia sygnałów i slotów dla pokręteł.
-*/
+ * @brief Konstruuje obiekt MainWindow.
+ * @param controller Wskaźnik do obiektu kontrolera dla logiki aplikacji.
+ * @param parent Wskaźnik do widgetu nadrzędnego, który jest przekazywany do konstruktora QMainWindow.
+ */
 MainWindow::MainWindow(Controller *controller, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -43,24 +57,15 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent) :
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     loadSettings();
 
-    setWindowTitle(tr("Hello, World!"));
-    qDebug() << tr("Hello, World!");
+    setWindowTitle(tr("HID-app"));
+
+    QTimer::singleShot(1000, this, SLOT(setupConnections()));
 
     previousDialValue = ui->dial_4->value();
 
     QPixmap pix("C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/imgs/hand.png");
     QPixmap pix2("C:/Users/MaciejBurakowski(258/Documents/WDS_BASIC/imgs/machanie.png");
 
-
-
-    // // Check if the pixmaps are successfully loaded
-    // if (pix.isNull()) {
-    //     qDebug() << "Failed to load image: C:/Users/MaciejBurakowski/Documents/WDS_BASIC/imgs/hand.png";
-    // } else {
-    //     QPixmap pixRotated = pix.transformed(QTransform().rotate(-120));
-    //     ui->label_pic->setPixmap(pixRotated.scaled(200, 200, Qt::KeepAspectRatio));
-    //     ui->label_pic->move(ui->label_pic->x(), ui->label_pic->y() - 100); // ręka góra dół
-    // }
 
     // Check if the pixmaps are successfully loaded
     if (pix.isNull()) {
@@ -86,7 +91,7 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent) :
 
     // Inicjalizacja portu szeregowego
     serial = new QSerialPort(this);
-    serial->setPortName("COM28"); // Ustaw odpowiedni port szeregowy
+    serial->setPortName("COM18"); // Ustaw odpowiedni port szeregowy
     serial->setBaudRate(QSerialPort::Baud9600); // Ustaw odpowiednią szybkość transmisji
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
@@ -108,8 +113,6 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent) :
 
     connect(ui->languageButton, &QPushButton::clicked, this, &MainWindow::switchLanguage);
 
-
-    // Connect ComboBox signals to slots
     connect(ui->pok1, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_dialComboBox_1_changed);
     connect(ui->pok2, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_dialComboBox_2_changed);
     connect(ui->pok3, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_dialComboBox_3_changed);
@@ -119,17 +122,19 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent) :
     connect(ui->przycisk_pok3, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_buttonComboBox_3_changed);
     connect(ui->przycisk_pok4, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::on_buttonComboBox_4_changed);
 
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked, Qt::UniqueConnection);
+    connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::on_pushButton_2_clicked, Qt::UniqueConnection);
+    connect(ui->pushButton_3, &QPushButton::clicked, this, &MainWindow::on_pushButton_3_clicked, Qt::UniqueConnection);
+    connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::on_pushButton_4_clicked, Qt::UniqueConnection);
+
+
     // Otwieranie portu szeregowego
     if (serial->open(QIODevice::ReadOnly)) {
         qDebug() << "Serial port opened successfully";
     } else {
         qDebug() << "Failed to open serial port:" << serial->errorString();
     }
-
-
-
 }
-
 
 /**
  * @brief Destruktor klasy MainWindow
@@ -141,18 +146,34 @@ MainWindow::~MainWindow()
     saveSettings();
 }
 
+/**
+ * @brief Ładuje ustawienia konfiguracyjne.
+ *
+ * Używa QSettings do wczytania zapisanych ustawień aplikacji, takich jak liczba przekręceń pokrętła.
+ */
 void MainWindow::loadSettings()
 {
     QSettings settings("MACIEKCORP", "WDS_BASIC");
     totalTurns = settings.value("totalTurns", 0).toInt();
 }
 
+/**
+ * @brief Zapisuje bieżące ustawienia konfiguracyjne.
+ *
+ * Zapisuje bieżące ustawienia, takie jak liczba przekręceń pokrętła, do trwałego przechowywania.
+ */
 void MainWindow::saveSettings()
 {
     QSettings settings("MACIEKCORP", "WDS_BASIC");
     settings.setValue("totalTurns", totalTurns);
 }
 
+/**
+ * @brief Stosuje skalowanie UI zgodnie z rozdzielczością ekranu.
+ *
+ * Automatycznie skaluje interfejs użytkownika na podstawie rozdzielczości ekranu,
+ * używając wartości DPI do dostosowania wielkości widgetów.
+ */
 void MainWindow::applyScaling()
 {
     qreal dpi = QGuiApplication::primaryScreen()->logicalDotsPerInch();
@@ -166,6 +187,12 @@ void MainWindow::applyScaling()
     scaleUI(ui->centralwidget, scale);
 }
 
+/**
+ * @brief Stosuje skalowanie UI zgodnie z rozdzielczością ekranu.
+ *
+ * Automatycznie skaluje interfejs użytkownika na podstawie rozdzielczości ekranu,
+ * używając wartości DPI do dostosowania wielkości widgetów.
+ */
 void MainWindow::scaleUI(QWidget *widget, qreal scale)
 {
     widget->setGeometry(widget->x() * scale, widget->y() * scale, widget->width() * scale, widget->height() * scale);
@@ -182,14 +209,17 @@ void MainWindow::scaleUI(QWidget *widget, qreal scale)
     }
 }
 
-
-
 /**
- * @brief Slot obsługujący zmianę wartości dial_4 (pokrętło głośności)
- * @param value Nowa wartość pokrętła
- * @details Slot odpowiada za zmianę głośności systemu na podstawie wartości pokrętła.
+ * @brief Obsługuje zmianę wartości pokrętła odpowiedzialnego za pokrętło 4.
+ * @param value Nowa wartość pokrętła.
+ *
+ * Slot, który reaguje na zmianę wartości pokrętła
  */
 void MainWindow::on_dial_4_valueChanged(int value) {
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing dial change...";
     ui->progressBar_3->setValue(value); //newVolume
     int index = ui->pok1->currentIndex();
     switch (index) {
@@ -207,16 +237,24 @@ void MainWindow::on_dial_4_valueChanged(int value) {
         break;
     default:
         break;
-    }
+    }}
 }
 
 
 /**
- * @brief Slot obsługujący zmianę wartości dial_2 (pokrętło przewijania)
- * @param value Nowa wartość pokrętła
- * @details Slot odpowiada za symulację przewijania strony w zależności od wartości pokrętła.
+ * @brief Obsługuje zmianę wartości pokrętła odpowiedzialnego za pokrętło 3.
+ * @param value Nowa wartość pokrętła.
+ *
+ * Slot, który reaguje na zmianę wartości pokrętła
  */
 void MainWindow::on_dial_2_valueChanged(int value){
+
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing dial change...";
+
+
 ui->progressBar->setValue(value);
 int index = ui->pok2->currentIndex();
 switch (index) {
@@ -234,17 +272,23 @@ case 3:
     break;
 default:
     break;
+}}
 }
-}
-
 
 /**
- * @brief Slot obsługujący zmianę wartości dial_3 (pokrętło wirtualnych pulpitów)
- * @param value Nowa wartość pokrętła
- * @details Slot odpowiada za zmianę wirtualnego pulpitu w systemie Windows na podstawie wartości pokrętła.
+ * @brief Obsługuje zmianę wartości pokrętła odpowiedzialnego za pokrętło 2.
+ * @param value Nowa wartość pokrętła.
+ *
+ * Slot, który reaguje na zmianę wartości pokrętła
  */
 void MainWindow::on_dial_3_valueChanged(int value)
 {
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing dial change...";
+
+
     ui->progressBar_2->setValue(value);
     int index = ui->pok3->currentIndex();
     switch (index) {
@@ -262,16 +306,23 @@ void MainWindow::on_dial_3_valueChanged(int value)
         break;
     default:
         break;
-    }
+    } }
 }
 
 /**
- * @brief Slot obsługujący zmianę wartości dial (pokrętło Alt+Tab)
- * @param value Nowa wartość pokrętła
- * @details Slot odpowiada za wywołanie kombinacji klawiszy Alt+Tab w zależności od zmiany wartości pokrętła.
+ * @brief Obsługuje zmianę wartości pokrętła odpowiedzialnego za pokrętło 1.
+ * @param value Nowa wartość pokrętła.
+ *
+ * Slot, który reaguje na zmianę wartości pokrętła
  */
 void MainWindow::on_dial_valueChanged(int value)
-    {
+{
+    //int scaledValue = value / 5;
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing dial change...";
+
         ui->progressBar_4->setValue(value);
         int index = ui->pok4->currentIndex();
         switch (index) {
@@ -290,82 +341,145 @@ void MainWindow::on_dial_valueChanged(int value)
         default:
             break;
         }
+    } else {
+        qDebug() << "Dial change ignored due to rapid re-spin.";
     }
-
-void MainWindow::on_encoderValueChanged(int encoderValue)
-{
-    // Zakładamy, że wartość enkodera jest w zakresie 0-100
-    // W przeciwnym razie należy dostosować przeskalowanie wartości
-    int value = encoderValue % 101;
-
-    qDebug() << "Encoder value changed to:" << value;
-
-    // Obliczamy różnicę między obecną wartością enkodera a poprzednią wartością
-    int delta = value - previousDialValue;
-
-    // Ustawiamy poprzednią wartość enkodera na obecną wartość
-    previousDialValue = value;
-
-    // Aktualizujemy głośność systemu w zależności od ruchu enkodera
-    int newVolume = controllerInstance->getSystemVolume() + delta;
-
-    // Upewniamy się, że głośność nie wyjdzie poza zakres 0-100
-    newVolume = qBound(0, newVolume, 100);
-
-    // Ustawiamy nową głośność systemu
-    controllerInstance->setSystemVolume(newVolume);
-
-    // Aktualizujemy wartość paska postępu
-    ui->progressBar_3->setValue(newVolume);
-    emit dial4ValueChanged(value);
 }
 
+
+/**
+ * @brief Slot obsługujący zmianę wartości enkodera.
+ * @param encoderValue Nowa wartość enkodera.
+ *
+ * Metoda obsługuje zmiany wartości enkodera, eliminując drgania dzięki mechanizmowi debouncing.
+ * Ustawia głośność systemu zgodnie z odczytaną wartością enkodera.
+ */
+    void MainWindow::on_encoderValueChanged(int encoderValue) {
+        static int lastReportedValue = -1;
+        static QElapsedTimer debounceTimer;
+        int debounceInterval = 50; // 50 ms dla debouncing
+
+        if (lastReportedValue != encoderValue && (!debounceTimer.isValid() || debounceTimer.elapsed() > debounceInterval)) {
+            debounceTimer.start();
+            lastReportedValue = encoderValue;
+
+            // Tutaj wykonujesz akcje, które mają być wykonane po zmianie wartości enkodera
+            qDebug() << "Encoder value changed to:" << encoderValue;
+            controllerInstance->setSystemVolume(encoderValue); // Zakładamy, że istnieje taka funkcja
+        }
+    }
+
+/**
+ * @brief Odczytuje dane z portu szeregowego.
+ *
+ * Metoda sprawdza, czy otrzymano właściwą ilość danych. W przypadku niekompletnych danych czyści bufor wejściowy.
+ */
 void MainWindow::readSerialData()
 {
-    QByteArray data = serial->readAll();
+    QByteArray buffer = serial->read(expectedDataSize);
 
-    // Przetwarzanie poprawnie sformatowanych danych
-    for (int i = 0; i <= data.size() - 8; i += 8) {
-        QByteArray segment = data.mid(i, 8);
+    // Check if we have received the correct amount of data
+    if (buffer.size() == expectedDataSize) {
+        processSerialFrame(buffer);
+    } else {
+        serial->clear(QSerialPort::Input); // Clear the input buffer if data is incomplete
+        qDebug() << "Incomplete or excess data received";
+    }
+}
 
-        // Sprawdzenie, czy segment jest poprawnie sformatowany
-        if (segment.size() == 8) {
-            processSensorData(segment);
-        } else {
-            qDebug() << "Nieznane dane: " << data.mid(i, 8).toHex();
+
+/**
+ * @brief Przetwarza ramkę danych otrzymaną przez port szeregowy.
+ * @param data Dane do przetworzenia.
+ *
+ * Metoda interpretuje dane z portu szeregowego, aktualizując wartości pokręteł i przycisków na interfejsie użytkownika.
+ */
+void MainWindow::processSerialFrame(const QByteArray &data)
+{
+    QDataStream stream(data);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    int encValues[4];
+    int buttonValues[4];
+    int rangeMillimeter;
+    int mode;
+
+    stream >> encValues[0] >> buttonValues[0];
+    stream >> encValues[1] >> buttonValues[1];
+    stream >> encValues[2] >> buttonValues[2];
+    stream >> buttonValues[3];
+    stream >> rangeMillimeter >> mode;
+
+    // Update dials based on encoder values
+    ui->dial->setValue(encValues[0]);
+    ui->dial_3->setValue(encValues[1]);
+    ui->dial_2->setValue(encValues[2]);
+
+    // Trigger buttons based on button values
+    handleButtonPress(buttonValues[0], ui->pushButton, 0);
+    handleButtonPress(buttonValues[1], ui->pushButton_4, 1);
+    handleButtonPress(buttonValues[2], ui->pushButton_2, 2);
+    handleButtonPress(buttonValues[3], ui->pushButton_3, 3);
+
+    // Optionally handle TOF range
+    int level = mapTOFValueToLevel(rangeMillimeter);
+    updateImagePosition(level);
+}
+
+/**
+ * @brief Slot obsługujący zdarzenia naciśnięcia przycisków.
+ * @param buttonValue Wartość stanu przycisku (naciśnięty lub nie).
+ * @param button Wskaźnik do przycisku, którego to dotyczy.
+ * @param buttonIndex Indeks przycisku.
+ *
+ * Metoda debouncuje stany przycisków, aby zapobiegać błędnym odczytom spowodowanym drganiami.
+ */
+void MainWindow::handleButtonPress(int buttonValue, QPushButton* button, int buttonIndex) {
+    static QVector<int> lastButtonState(4, 1); // Initial state is '1' (released)
+    static QVector<QElapsedTimer> timers(4); // Timers for debouncing
+    int debounceThreshold = 50; // milliseconds
+
+    if (!timers[buttonIndex].isValid() || timers[buttonIndex].elapsed() > debounceThreshold) {
+        if (buttonValue == 0 && lastButtonState[buttonIndex] == 1) {
+            button->click();
+            lastButtonState[buttonIndex] = 0;
+            timers[buttonIndex].start();
+        } else if (buttonValue == 1 && lastButtonState[buttonIndex] == 0) {
+            lastButtonState[buttonIndex] = 1;
+            timers[buttonIndex].start();
         }
     }
 }
 
-void MainWindow::processSensorData(const QByteArray &data)
+/**
+ * @brief Przetwarza naciśnięcia przycisków.
+ * @param buttonValues Tablica wartości przycisków.
+ *
+ * Metoda obsługuje przetwarzanie stanów przycisków, realizując mechanizm anty-drganiowy i detekcję wielokrotnego naciśnięcia.
+ */
+void MainWindow::processButtonPresses(int buttonValues[4])
 {
-    // Wydzielamy pierwsze cztery bajty (dane z enkodera)
-    QByteArray encoderData = data.mid(0, 4);
+    static QVector<int> pressCount(4, 1); // Counters for each button
+    static const int threshold = 3; // Threshold for button press detection
 
-    // Konwersja z little-endian hex na dec (dla enkodera)
-    quint32 encoderValue = qFromLittleEndian<quint32>(reinterpret_cast<const uchar*>(encoderData.constData()));
-    qDebug() << "Encoder value:" << encoderValue;
-
-    // Emitujemy sygnał zmiany wartości enkodera
-    emit encoderValueChanged(encoderValue);
-
-    // Wydzielamy kolejne cztery bajty (dane z TOFa)
-    QByteArray tofData = data.mid(4, 4);
-
-    // Konwersja z little-endian hex na dec (dla TOFa)
-    quint32 tofValue = qFromLittleEndian<quint32>(reinterpret_cast<const uchar*>(tofData.constData()));
-    qDebug() << "TOF value:" << tofValue;
-
-    // Przekształcamy wartość TOF na poziom ruchu obrazka
-    int level = mapTOFValueToLevel(tofValue);
-
-    // Aktualizujemy pozycję obrazka na podstawie poziomu
-    updateImagePosition(level);
+    for (int i = 0; i < 4; ++i) {
+        if (buttonValues[i] == 0) {
+            pressCount[i]++;
+        } else {
+            if (pressCount[i] >= threshold) {
+                //simulateButtonClick(i); // Simulate the button click
+            }
+            pressCount[i] = 0; // Reset the counter when button is released or after a click is simulated
+        }
+    }
 }
 
-
-
-
+/**
+ * @brief Przetwarza dane z enkodera.
+ * @param data Dane z enkodera.
+ *
+ * Metoda przetwarza dane z enkodera, konwertując je z formatu hex na decimal i skalując odpowiednio wartość.
+ */
 void MainWindow::processEncoderData(const QByteArray &data)
 {
     // Wyodrębnij pierwsze dwa bajty
@@ -388,8 +502,14 @@ void MainWindow::processEncoderData(const QByteArray &data)
         qDebug() << "Nie udało się przekonwertować danych z enkodera na system dziesiętny.";
     }
 }
+
+/**
+ * @brief Przetwarza dane z czujnika TOF.
+ * @param data Dane z czujnika TOF.
+ *
+ * Metoda przetwarza dane z czujnika TOF, konwertując wartości z hex na decimal i realizując dalszą logikę bazującą na odczytanej odległości.
+ */
 void MainWindow::processTOFData(const QByteArray &data)
-//void MainWindow::processTOFData()
 {
     // Wyodrębnij pierwsze dwa bajty
     QByteArray significantBytes = data.mid(0, 2);
@@ -409,8 +529,12 @@ void MainWindow::processTOFData(const QByteArray &data)
     }
 }
 
-
-
+/**
+ * @brief Obsługuje wartość z enkodera i aktualizuje głośność systemu.
+ * @param value Nowa wartość z enkodera.
+ *
+ * Metoda aktualizuje głośność systemu na podstawie odczytanej wartości z enkodera, uwzględniając kierunek i wielkość zmiany.
+ */
 void MainWindow::handleEncoderValue(int value)
 {
     // Pobierz aktualną głośność systemu
@@ -440,107 +564,142 @@ void MainWindow::handleEncoderValue(int value)
 
 
 /**
- * @brief Slot obsługujący kliknięcie przycisku wyciszenia dźwięku
+ * @brief Slot obsługujący kliknięcie przycisku 4
  */
 void MainWindow::on_pushButton_3_clicked()
 {
-    int index = ui->przycisk_pok1->currentIndex();
-    switch (index) {
-    case 0:
-        controllerInstance->toggleMute();
-        break;
-    case 1:
-        controllerInstance->toggleMicrophoneMute();
-        break;
-    case 2:
-        controllerInstance->createNewDesktop();
-        break;
-    case 3:
-        controllerInstance->accChanges();
-        break;
-    default:
-        break;
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing click...";
+
+        int index = ui->przycisk_pok4->currentIndex();
+        switch (index) {
+        case 0:
+            controllerInstance->toggleMute();
+            break;
+        case 1:
+            controllerInstance->toggleMicrophoneMute();
+            break;
+        case 2:
+            controllerInstance->createNewDesktop();
+            break;
+        case 3:
+            controllerInstance->accChanges();
+            break;
+        default:
+            break;
+        }
+        totalClicks++;
+        ui->total_click_count->setText(QString::number(totalClicks));
+    } else {
+        qDebug() << "Click ignored due to rapid re-click.";
     }
-    totalClicks++;
-    ui->total_click_count->setText(QString::number(totalClicks));
 }
+
 /**
- * @brief Slot obsługujący kliknięcie przycisku wyciszenia mikrofonu
+ * @brief Slot obsługujący kliknięcie przycisku 3
  */
 void MainWindow::on_pushButton_2_clicked()
 {
-    int index = ui->przycisk_pok2->currentIndex();
-    switch (index) {
-    case 0:
-        controllerInstance->toggleMicrophoneMute();
-        break;
-    case 1:
-        controllerInstance->toggleMute();
-        break;
-    case 2:
-        controllerInstance->createNewDesktop();
-        break;
-    case 3:
-        controllerInstance->accChanges();
-        break;
-    default:
-        break;
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing click...";
+
+        int index = ui->przycisk_pok4->currentIndex();
+        switch (index) {
+        case 0:
+            controllerInstance->toggleMicrophoneMute();
+            break;
+        case 1:
+            controllerInstance->toggleMute();
+            break;
+        case 2:
+            controllerInstance->createNewDesktop();
+            break;
+        case 3:
+            controllerInstance->accChanges();
+            break;
+        default:
+            break;
+        }
+        totalClicks++;
+        ui->total_click_count->setText(QString::number(totalClicks));
+    } else {
+        qDebug() << "Click ignored due to rapid re-click.";
     }
-    totalClicks++;
-    ui->total_click_count->setText(QString::number(totalClicks));
 }
 
 /**
- * @brief Slot obsługujący kliknięcie przycisku zmiany pulpitu (skrót Win+D)
+ * @brief Slot obsługujący kliknięcie przycisku 2
  */
 void MainWindow::on_pushButton_4_clicked()
 {
-    int index = ui->przycisk_pok3->currentIndex();
-    switch (index) {
-    case 0:
-        controllerInstance->createNewDesktop();
-        break;
-    case 1:
-        controllerInstance->toggleMute();
-        break;
-    case 2:
-        controllerInstance->toggleMicrophoneMute();
-        break;
-    case 3:
-        controllerInstance->accChanges();
-        break;
-    default:
-        break;
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing click...";
+
+        int index = ui->przycisk_pok4->currentIndex();
+        switch (index) {
+        case 0:
+            controllerInstance->createNewDesktop();
+            break;
+        case 1:
+            controllerInstance->toggleMute();
+            break;
+        case 2:
+            controllerInstance->toggleMicrophoneMute();
+            break;
+        case 3:
+            controllerInstance->accChanges();
+            break;
+        default:
+            break;
+        }
+        totalClicks++;
+        ui->total_click_count->setText(QString::number(totalClicks));
+    } else {
+        qDebug() << "Click ignored due to rapid re-click.";
     }
-    totalClicks++;
-    ui->total_click_count->setText(QString::number(totalClicks));
 }
 
+
 /**
- * @brief Slot obsługujący kliknięcie przycisku Enter
+ * @brief Slot obsługujący kliknięcie przycisku 1
  */
 void MainWindow::on_pushButton_clicked()
 {
-    int index = ui->przycisk_pok4->currentIndex();
-    switch (index) {
-    case 0:
-        controllerInstance->accChanges();
-        break;
-    case 1:
-        controllerInstance->toggleMute();
-        break;
-    case 2:
-        controllerInstance->toggleMicrophoneMute();
-        break;
-    case 3:
-        controllerInstance->createNewDesktop();
-        break;
-    default:
-        break;
+    static QElapsedTimer timer;
+    if (!timer.isValid() || timer.elapsed() > 200) { // 200 ms threshold
+        timer.start();
+        qDebug() << "Processing click...";
+
+        int index = ui->przycisk_pok4->currentIndex();
+        switch (index) {
+        case 0:
+            controllerInstance->accChanges();
+            break;
+        case 1:
+            controllerInstance->toggleMute();
+            break;
+        case 2:
+            controllerInstance->toggleMicrophoneMute();
+            break;
+        case 3:
+            controllerInstance->createNewDesktop();
+            break;
+        default:
+            break;
+        }
+        totalClicks++;
+        ui->total_click_count->setText(QString::number(totalClicks));
+    } else {
+        qDebug() << "Click ignored due to rapid re-click.";
     }
-    totalClicks++;
-    ui->total_click_count->setText(QString::number(totalClicks));
 }
+
 
 /**
  * @brief Aktualizuje rozmiar obrazka na podstawie przekazanej wartości deltaY
@@ -633,18 +792,21 @@ void MainWindow::on_Wykres_clicked()
     dialog->show();
 }
 
-
+/**
+ * @brief Obsługa zmiany wartości paska postępu, jeżeli potrzebne
+ */
 void MainWindow::on_someProgressBarValueChanged(int progressBarIndex, int value)
-{
-    // Obsługa zmiany wartości paska postępu, jeżeli potrzebne
+{   
     qDebug() << "Progress bar" << progressBarIndex << "value changed to" << value;
 }
 
+/**
+ * @brief Aktualizowanie wartości na wykresie
+ */
 void MainWindow::updateChartValues(int progressBarIndex, int value)
 {
     emit progressBarValueChanged(progressBarIndex, value);
 }
-
 
 
 /**
@@ -694,6 +856,14 @@ void MainWindow::on_zmiana_trybu_currentIndexChanged(int index)
     }
 }
 
+/**
+ * @brief Mapuje wartość z czujnika TOF na poziom, który określa pozycję ruchu obrazka.
+ * @param tofValue Odczytana wartość z czujnika TOF.
+ * @return Obliczony poziom ruchu obrazka.
+ *
+ * Funkcja mapuje wartości odczytane z czujnika Time-of-Flight na zakresy poziomów ruchu obrazka,
+ * aby umożliwić ich wizualną reprezentację.
+ */
 int MainWindow::mapTOFValueToLevel(int tofValue)
 {
     // Definiujemy zakresy wartości TOF
@@ -713,7 +883,12 @@ int MainWindow::mapTOFValueToLevel(int tofValue)
     return level;
 }
 
-
+/**
+ * @brief Aktualizuje pozycję obrazka na podstawie zmiennej poziomu.
+ * @param level Obliczony poziom, który determinuje przesunięcie obrazka.
+ *
+ * Metoda aktualizuje pozycję obrazka w zależności od otrzymanego poziomu, przesuwając go o określoną liczbę pikseli.
+ */
 void MainWindow::updateImagePosition(int level)
 {
     // Oblicz przesunięcie obrazka na podstawie poziomu
@@ -730,11 +905,30 @@ void MainWindow::updateImagePosition(int level)
     moveCounter = level;
 }
 
+/**
+ * @brief Aktualizuje etykietę z całkowitą liczbą przekręceń pokrętła.
+ * @param totalTurns Całkowita liczba przekręceń pokrętła.
+ *
+ * Wyświetla wartość całkowitej liczby przekręceń w odpowiedniej etykiecie.
+ */
 void MainWindow::updateTotalKnobCountLabel(int totalTurns)
 {
     ui->total_knob_count->setText(QString::number(totalTurns));
+    updateDistanceLabel(totalTurns);
 }
 
+void MainWindow::updateDistanceLabel(int value) {
+    double convertedValue = value * (3.14 / 20);
+    ui->distance->setText(QString::number(convertedValue, 'f', 2));  // 'f' for fixed-point, 2 digits after decimal point
+}
+
+
+/**
+ * @brief Ładuje język interfejsu użytkownika.
+ * @param langCode Kod języka do załadowania.
+ *
+ * Funkcja ładuje plik tłumaczenia na podstawie podanego kodu języka i aktualizuje interfejs użytkownika.
+ */
 void MainWindow::loadLanguage(const QString &langCode)
 {
     qDebug() << "Loading language:" << langCode;
@@ -764,6 +958,11 @@ void MainWindow::loadLanguage(const QString &langCode)
     qDebug() << "UI retranslated.";
 }
 
+/**
+ * @brief Przełącza język interfejsu użytkownika.
+ *
+ * Funkcja przełącza język interfejsu użytkownika między polskim a angielskim, w zależności od aktualnie ustawionego języka.
+ */
 void MainWindow::switchLanguage()
 {
     qDebug() << "Switching language. Current language is Polish:" << isPolishSelected;
@@ -779,124 +978,95 @@ void MainWindow::switchLanguage()
 }
 
 void MainWindow::on_dialComboBox_1_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla pierwszego pokrętła
 }
 
-void MainWindow::on_dialComboBox_2_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla drugiego pokrętła
+void MainWindow::on_dialComboBox_2_changed(int index) {  
 }
 
 void MainWindow::on_dialComboBox_3_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla trzeciego pokrętła
 }
 
 void MainWindow::on_dialComboBox_4_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla czwartego pokrętła
 }
 
 void MainWindow::on_buttonComboBox_1_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla pierwszego przycisku
 }
 
 void MainWindow::on_buttonComboBox_2_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla drugiego przycisku
 }
 
 void MainWindow::on_buttonComboBox_3_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla trzeciego przycisku
 }
 
 void MainWindow::on_buttonComboBox_4_changed(int index) {
-    // Tutaj dodaj logikę zmiany funkcji dla czwartego przycisku
 }
 
+/**
+ * @brief Ustawia głośność systemu na podstawie zmian wartości pokrętła.
+ * @param value Nowa wartość pokrętła dla głośności.
+ *
+ * Funkcja oblicza różnicę między aktualną wartością a poprzednią wartością pokrętła, aktualizuje głośność systemową
+ * i emituje sygnał o zmianie wartości. Również aktualizuje licznik całkowitych przekręceń pokrętła.
+ */
 void MainWindow::setVolume(int value) {
     // Obliczamy różnicę między obecną wartością pokrętła a poprzednią wartością
     int delta = value - previousDialValue;
-
-    // Ustawiamy poprzednią wartość pokrętła na obecną wartość
     previousDialValue = value;
-
-    // Aktualizujemy głośność systemu w zależności od ruchu enkodera
     int newVolume = controllerInstance->getSystemVolume() + delta;
-
-    // Upewniamy się, że głośność nie wyjdzie poza zakres 0-100
     newVolume = qBound(0, newVolume, 100);
-
-    // Ustawiamy nową głośność systemu
     controllerInstance->setSystemVolume(newVolume);
 
-    // Aktualizujemy wartość paska postępu
-    //ui->progressBar_3->setValue(newVolume);
-
-    // Emitujemy sygnał informujący o zmianie wartości pokrętła
-    emit dial4ValueChanged(value);
-
-    // Emitujemy sygnał informujący o zmianie wartości paska postępu (progressBar_3)
-    emit progressBarValueChanged(3, newVolume);
-
     // Inkrementujemy licznik całkowitych przekręceń
     totalTurns++;
     if (totalTurns > 1000) {
-        totalTurns = 0;  // Resetujemy licznik po osiągnięciu 1000 przekręceń
+        totalTurns = 0;
     }
 
-    // Emitujemy sygnał informujący o zmianie całkowitej liczby przekręceń
     emit totalTurnsChanged(totalTurns);
-
-    // Aktualizujemy etykietę z całkowitą liczbą przekręceń
     updateTotalKnobCountLabel(totalTurns);
 }
 
-
+/**
+ * @brief Zmienia aktywną kartę w przeglądarce.
+ * @param value Nowa wartość odczytana z pokrętła.
+ *
+ * Funkcja zmienia aktywną kartę w przeglądarce, symulując naciśnięcia klawiszy.
+ * Kierunek zmiany (lewo lub prawo) zależy od tego, czy wartość odczytana jest większa
+ * czy mniejsza od ostatniej zapamiętanej wartości.
+ */
 void MainWindow::changeWebWindow(int value) {
-    // Określamy kody klawiszy PageUp i PageDown
-    BYTE vkPageUp = VK_PRIOR;
-    BYTE vkPageDown = VK_NEXT;
+    static int lastValue = 0;
+    BYTE vkTab = VK_TAB;
+    bool right = value > lastValue; // Czy zwiększamy wartość?
 
-    // Sprawdź, czy wartość dial_2 wskazuje na lewą stronę (mniej niż 50)
-    if (value < 50) {
-        // Wysyłamy Ctrl+PageDown do aktywnego okna
-        keybd_event(VK_CONTROL, 0, 0, 0);
-        keybd_event(vkPageDown, 0, 0, 0);
-        keybd_event(vkPageDown, 0, KEYEVENTF_KEYUP, 0);
-        keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
-        qDebug() << "Przesunięto w lewo!";
-    } else {
-        // Wysyłamy Ctrl+PageUp do aktywnego okna
-        keybd_event(VK_CONTROL, 0, 0, 0);
-        keybd_event(vkPageUp, 0, 0, 0);
-        keybd_event(vkPageUp, 0, KEYEVENTF_KEYUP, 0);
-        keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
-        qDebug() << "Przesunięto w prawo!";
-    }
+    keybd_event(VK_CONTROL, 0, 0, 0);
+    keybd_event(vkTab, 0, right ? 0 : KEYEVENTF_EXTENDEDKEY, 0);
+    keybd_event(vkTab, 0, right ? KEYEVENTF_KEYUP : KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+    keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
 
-    // Poczekaj 500 ms (0.5 sekundy) po wysłaniu zdarzenia klawisza
-    Sleep(500);
+    //qDebug() << "Navigated " << (right ? "right" : "left") << " to the next tab.";
 
-    // Ustawiamy fokus na okno przeglądarki
-    HWND foregroundWindow = GetForegroundWindow();
-    SetForegroundWindow(foregroundWindow);
+    lastValue = value;
 
-    // Emitujemy sygnał informujący o zmianie wartości pokrętła
     emit dial2ValueChanged(value);
 
-    // Inkrementujemy licznik całkowitych przekręceń
     totalTurns++;
     if (totalTurns > 1000) {
-        totalTurns = 0;  // Resetujemy licznik po osiągnięciu 1000 przekręceń
+        totalTurns = 0;
     }
 
-    // Emitujemy sygnał informujący o zmianie całkowitej liczby przekręceń
     emit totalTurnsChanged(totalTurns);
-
-    // Aktualizujemy etykietę z całkowitą liczbą przekręceń
     updateTotalKnobCountLabel(totalTurns);
 }
 
-
+/**
+ * @brief Zmienia aktywny pulpit (desktop) systemu Windows.
+ * @param value Nowa wartość odczytana z pokrętła.
+ *
+ * Funkcja zmienia pulpit użytkownika na następny lub poprzedni, w zależności od kierunku obrotu pokrętła.
+ * Możliwość tworzenia nowego pulpitu, jeśli nie istnieje więcej niż jeden.
+ */
 void MainWindow::changeDesktop(int value) {
-    //ui->progressBar_2->setValue(value);
 
     static int previousValue = 0;
     int delta = value - previousValue;
@@ -905,70 +1075,62 @@ void MainWindow::changeDesktop(int value) {
     bool multipleDesktops = IsProcessDPIAware() && (GetDesktopWindow() != GetShellWindow());
 
     if (delta < 0) {
-        // Ruch pokrętłem w lewo
         INPUT input;
         input.type = INPUT_KEYBOARD;
-        input.ki.wVk = VK_CONTROL;  // Wciśnięcie klawisza Ctrl
+        input.ki.wVk = VK_CONTROL;
         input.ki.dwFlags = 0;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_LWIN;  // Wciśnięcie klawisza Windows
+        input.ki.wVk = VK_LWIN;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_LEFT;  // Wciśnięcie strzałki w lewo
+        input.ki.wVk = VK_LEFT;
         SendInput(1, &input, sizeof(INPUT));
 
-        // Zwalnianie klawiszy
         input.ki.dwFlags = KEYEVENTF_KEYUP;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_LWIN;  // Zwolnienie klawisza Windows
+        input.ki.wVk = VK_LWIN;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_CONTROL;  // Zwolnienie klawisza Ctrl
+        input.ki.wVk = VK_CONTROL;
         SendInput(1, &input, sizeof(INPUT));
 
     } else if (delta > 0) {
-        // Ruch pokrętłem w prawo
         INPUT input;
         input.type = INPUT_KEYBOARD;
-        input.ki.wVk = VK_CONTROL;  // Wciśnięcie klawisza Ctrl
+        input.ki.wVk = VK_CONTROL;
         input.ki.dwFlags = 0;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_LWIN;  // Wciśnięcie klawisza Windows
+        input.ki.wVk = VK_LWIN;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_RIGHT;  // Wciśnięcie strzałki w prawo
+        input.ki.wVk = VK_RIGHT;
         SendInput(1, &input, sizeof(INPUT));
 
-        // Zwalnianie klawiszy
         input.ki.dwFlags = KEYEVENTF_KEYUP;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_LWIN;  // Zwolnienie klawisza Windows
+        input.ki.wVk = VK_LWIN;
         SendInput(1, &input, sizeof(INPUT));
 
-        input.ki.wVk = VK_CONTROL;  // Zwolnienie klawisza Ctrl
+        input.ki.wVk = VK_CONTROL;
         SendInput(1, &input, sizeof(INPUT));
 
     } else if (!multipleDesktops) {
         // Nie ma więcej niż jednego pulpitu, więc tworzymy nowy za pomocą skrótu Win+Ctrl+D
         INPUT input[4] = {};
 
-        // Wciśnięcie klawisza Ctrl
         input[0].type = INPUT_KEYBOARD;
         input[0].ki.wVk = VK_CONTROL;
 
-        // Wciśnięcie klawisza Windows
         input[1].type = INPUT_KEYBOARD;
         input[1].ki.wVk = VK_LWIN;
 
-        // Wciśnięcie klawisza D
         input[2].type = INPUT_KEYBOARD;
         input[2].ki.wVk = 'D';
 
-        // Zwalnianie wszystkich klawiszy
         input[3].type = INPUT_KEYBOARD;
         input[3].ki.wVk = VK_CONTROL;
         input[3].ki.dwFlags = KEYEVENTF_KEYUP;
@@ -980,52 +1142,58 @@ void MainWindow::changeDesktop(int value) {
     emit dial3ValueChanged(value);
     totalTurns++;
     if (totalTurns > 1000) {
-        totalTurns = 0;  // Resetuj licznik po osiągnięciu 1000 przekręceń
+        totalTurns = 0;
     }
     emit totalTurnsChanged(totalTurns);
     updateTotalKnobCountLabel(totalTurns);
 }
 
-
-void MainWindow::changeAppFocus(int value)
+/**
+ * @brief Zmienia fokus aplikacji.
+ * @param direction Kierunek zmiany fokusu (1 dla 'następny', -1 dla 'poprzedni').
+ *
+ * Funkcja obsługuje przełączanie fokusu między aplikacjami za pomocą kombinacji Alt+Tab,
+ * gdzie kierunek zależy od wartości przekazanej w parametrze.
+ */
+void MainWindow::changeAppFocus(int direction)
 {
-    static int previousValue = value;
-    int delta = value - previousValue;
+    static bool isAltPressed = false;
 
-    // Jeśli delta jest dodatnie (przekręcenie w prawo), wykonujemy skrót Alt + Tab
-    if (delta > 0) {
-        // Wykonujemy skrót Alt + Tab
-        INPUT inputs[4] = {};
-
-        // Wciśnięcie klawisza Alt
-        inputs[0].type = INPUT_KEYBOARD;
-        inputs[0].ki.wVk = VK_MENU;
-
-        // Wciśnięcie klawisza Tab
-        inputs[1].type = INPUT_KEYBOARD;
-        inputs[1].ki.wVk = VK_TAB;
-
-        // Zwolnienie klawisza Tab
-        inputs[2].type = INPUT_KEYBOARD;
-        inputs[2].ki.wVk = VK_TAB;
-        inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
-
-        // Zwolnienie klawisza Alt
-        inputs[3].type = INPUT_KEYBOARD;
-        inputs[3].ki.wVk = VK_MENU;
-        inputs[3].ki.dwFlags = KEYEVENTF_KEYUP;
-
-        SendInput(4, inputs, sizeof(INPUT));
+    if (!isAltPressed) {
+        INPUT inputAlt;
+        inputAlt.type = INPUT_KEYBOARD;
+        inputAlt.ki.wVk = VK_MENU;
+        inputAlt.ki.dwFlags = 0; // 0 oznacza naciśnięcie klawisza
+        SendInput(1, &inputAlt, sizeof(INPUT));
+        isAltPressed = true;
     }
 
-    // Aktualizujemy poprzednią wartość
-    previousValue = value;
+    INPUT inputs[2] = {};
+    inputs[0].type = INPUT_KEYBOARD;
+    inputs[0].ki.wVk = VK_TAB;
+    inputs[0].ki.dwFlags = 0;
 
-    totalTurns++;
-    if (totalTurns > 1000) {
-        totalTurns = 0;  // Resetuj licznik po osiągnięciu 1000 przekręceń
-    }
-    emit totalTurnsChanged(totalTurns);
-    updateTotalKnobCountLabel(totalTurns);
+    inputs[1].type = INPUT_KEYBOARD;
+    inputs[1].ki.wVk = VK_TAB;
+    inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    SendInput(2, inputs, sizeof(INPUT));
+}
+
+/**
+ * @brief Resetuje stan klawisza Alt.
+ *
+ * Funkcja resetuje stan klawisza Alt do stanu nieaktywnego, czyli zwalnia klawisz Alt.
+ */
+void MainWindow::resetAppFocus()
+{
+    INPUT input;
+    input.type = INPUT_KEYBOARD;
+    input.ki.wVk = VK_MENU;
+    input.ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(1, &input, sizeof(INPUT));
+
+    // Reset flagi
+    isAltPressed = false;
 }
 

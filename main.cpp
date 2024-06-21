@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp
+ * @brief Zawiera funkcję główną programu
+ */
+
 #include "mainwindow.h"
 #include "controller.h"
 #include <QWidget>
@@ -8,8 +13,10 @@
 #include <QVBoxLayout>
 #include <QGuiApplication>
 
+
+
 /**
- * @brief Funkcja główna programu.
+ * @brief Funkcja główną programu.
  *
  * Tworzy instancję kontrolera i głównego okna aplikacji, ładuje tłumaczenia interfejsu użytkownika
  * i uruchamia główną pętlę zdarzeń aplikacji.
